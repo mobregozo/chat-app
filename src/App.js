@@ -1,18 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ChatWindow from './components/ChatWindow';
+import InputChat from './components/InputChat';
+import ContactList from './components/ContactList';
+
 
 class App extends Component {
+
+  constructor(props) {    
+    super(props);
+
+    this.state = {contacts: [], chats:[]};
+    this.addChat = this.addChat.bind(this);
+  }
+
+  addChat(chat) {
+    this.setState({
+      chats: this.state.chats.concat([ chat ])
+    });
+  }
+
   render() {
+  
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+        <div className="chat-window">
+          <ChatWindow chatList={this.state.chats}></ChatWindow>
+          <InputChat onSubmit={this.addChat}></InputChat>
         </div>
-        <p className="App-intro">
-          To get started with Niels, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <ContactList contactList={this.state.contacts}></ContactList>
       </div>
     );
   }
